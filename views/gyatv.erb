@@ -7,7 +7,7 @@
   <body>
 <script type="text/javascript">
 
-var gyatvURL = "http://Gyazz.com/GyaTV/<%= name %>/json";
+var gyatvURL = "http://Gyazz.com/GyaTV/<%= @name %>/json";
 
 var body = $('body');
 body.css('margin','0');
@@ -98,7 +98,7 @@ function displayNext(firsttime){
 
   // checkAndRun();
 
-  timeout = setTimeout(function(){ displayNext(false); }, 3000);
+  timeout = setTimeout(function(){ displayNext(false); }, 5000);
 }
 
 // バックグラウンドでページ内容をロード
