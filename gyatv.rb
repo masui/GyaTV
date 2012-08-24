@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 # -*- ruby -*-
 
+#
+# TODO: リダイレクト
+#
+
 require 'rubygems'
 require 'sinatra'
 
