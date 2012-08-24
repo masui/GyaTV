@@ -1,0 +1,134 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>GyaTV: <%= @name %></title>
+    <script language="JavaScript" src="/javascripts/jquery.js"></script>
+  </head>
+  <body>
+<script type="text/javascript">
+
+var gyatvURL = "http://Gyazz.com/GyaTV/<%= name %>/json";
+
+var body = $('body');
+body.css('margin','0');
+body.css('padding','0');
+body.css('border','0');
+
+var iframePools = 3;
+var iframes = new Array(iframePools);
+var iframeIndex = 0;
+for(var i=0;i < iframePools;i++){
+  var iframe = $('<iframe>');
+  iframe.css('width','100%');
+  iframe.css('height','100%');
+  iframe.css('position','absolute');
+  iframe.css('top','0');
+  iframe.css('left','0');
+  iframe.css('margin','0');
+  iframe.css('padding','0');
+  iframe.css('border','0');
+  iframe.css('display','none');
+  iframe.attr('frameborder','0');
+  iframe.attr('marginwidth','0');
+  body.append(iframe);
+  iframes[i] = iframe;
+}
+
+var imgPools = 3;
+var imgs = new Array(imgPools);
+var imgIndex = 0;
+for(var i=0;i < imgPools;i++){
+  var img = $('<img>');
+  img.css('width','100%');
+  img.css('height','100%');
+  img.css('position','absolute');
+  img.css('top','0');
+  img.css('left','0');
+  img.css('margin','0');
+  img.css('padding','0');
+  img.css('border','0');
+  img.css('display','none');
+  img.attr('frameborder','0');
+  img.attr('marginwidth','0');
+  body.append(img);
+  imgs[i] = img;
+}
+
+var pages = [];
+var pageIndex = 0;
+
+var curElement, nextElement;
+var timeout = null;
+
+function displayNext(firsttime){
+  if(firsttime){
+    pageIndex = 0;
+    imgIndex = 0;
+    iframeIndex = 0;
+    url = pages[pageIndex];
+    if(url.match(/(png|jpg|gif)$/i)){
+      curElement = imgs[imgIndex];
+    }
+    else {
+      curElement = iframes[iframeIndex];
+    }
+    loadPage(curElement,url);
+    curElement.css('display','block');
+  }
+  else {
+    curElement.css('display','none');
+    nextElement.css('display','block');
+    curElement = nextElement;
+  }
+  // 次に表示するページをバックグラウンドでロード
+  pageIndex = (pageIndex+1) % pages.length;
+  if(pageIndex == 0){
+    checkAndRun();
+  }
+  url = pages[pageIndex];
+  if(url.match(/(png|jpg|gif)$/i)){
+    imgIndex = (imgIndex+1) % imgs.length;
+    nextElement = imgs[imgIndex];
+  }
+  else {
+    iframeIndex = (iframeIndex+1) % iframes.length;
+    nextElement = iframes[iframeIndex];
+  }
+  loadPage(nextElement,url); // 非同期でロードしておく
+
+  // checkAndRun();
+
+  timeout = setTimeout(function(){ displayNext(false); }, 3000);
+}
+
+// バックグラウンドでページ内容をロード
+function loadPage(e,src){
+//alert("loadPage(" + src + ")");
+  setTimeout(function(){ e.attr('src',src); },0);
+}
+
+var curJSON = [];
+
+function checkAndRun(){
+  $.getJSON(gyatvURL, function(data){
+    if(data.join() != curJSON.join()){
+      curJSON = data;
+      v = eval(curJSON);
+      pages = [];
+      pageIndex = 0;
+      for(var i in v){
+        if(v[i].match(/^http:\/\//)){
+          pages.push(v[i]);
+        }
+      }
+      if(timeout) clearTimeout(timeout);
+      displayNext(true);
+    }
+  });
+}
+
+checkAndRun();
+  
+</script>
+  </body>
+</html>
