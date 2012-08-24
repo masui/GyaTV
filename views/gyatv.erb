@@ -55,6 +55,7 @@ for(var i=0;i < imgPools;i++){
 }
 
 var pages = [];
+var secs = [];  // 何秒待つか
 var pageIndex = 0;
 
 var curElement, nextElement;
@@ -80,6 +81,7 @@ function displayNext(firsttime){
     nextElement.css('display','block');
     curElement = nextElement;
   }
+  sec = secs[pageIndex];
   // 次に表示するページをバックグラウンドでロード
   pageIndex = (pageIndex+1) % pages.length;
   if(pageIndex == 0){
@@ -98,7 +100,7 @@ function displayNext(firsttime){
 
   // checkAndRun();
 
-  timeout = setTimeout(function(){ displayNext(false); }, 5000);
+  timeout = setTimeout(function(){ displayNext(false); }, sec * 1000);
 }
 
 // バックグラウンドでページ内容をロード
@@ -117,8 +119,13 @@ function checkAndRun(){
       pages = [];
       pageIndex = 0;
       for(var i in v){
-        if(v[i].match(/^http:\/\//)){
-          pages.push(v[i]);
+        line = v[i]
+        if(line.match(/^http:\/\//)){
+          a = line.split(/ /);
+          pages.push(a[0]);
+          sec = 5;
+          if(a.length > 1) sec = 10;
+          secs.push(sec);
         }
       }
       if(timeout) clearTimeout(timeout);
