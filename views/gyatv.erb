@@ -37,21 +37,40 @@ for(var i=0;i < iframePools;i++){
 
 var imgPools = 3;
 var imgs = new Array(imgPools);
+var divs = new Array(imgPools);
 var imgIndex = 0;
 for(var i=0;i < imgPools;i++){
+  var div = $('<div>');
+  div.css('margin','0');
+  div.css('padding','0');
+  div.css('border','0');
+  div.css('display','none');
+  div.css('height','100%');
+  div.css('background-color','#444');
+  div.attr('align','center');
+  body.append(div);
   var img = $('<img>');
-  img.css('width','100%');
-  img.css('height','100%');
-  img.css('position','absolute');
-  img.css('top','0');
-  img.css('left','0');
   img.css('margin','0');
   img.css('padding','0');
   img.css('border','0');
-  img.css('display','none');
-  img.attr('frameborder','0');
-  img.attr('marginwidth','0');
-  body.append(img);
+  img.css('height','100%');
+  div.append(img);
+
+//  var img = $('<img>');
+//  //img.css('width','100%');
+//  img.css('height','100%');
+//  img.css('position','absolute');
+//  img.css('top','0');
+//  img.css('left','0');
+//  img.css('margin','0');
+//  img.css('padding','0');
+//  img.css('border','0');
+//  img.css('display','none');
+//  img.attr('frameborder','0');
+//  img.attr('marginwidth','0');
+//  img.attr('margin','auto');
+//  body.append(img);
+  divs[i] = div;
   imgs[i] = img;
 }
 
@@ -69,12 +88,13 @@ function displayNext(firsttime){
     iframeIndex = 0;
     url = pages[pageIndex];
     if(url.match(/(png|jpg|gif)$/i)){
-      curElement = imgs[imgIndex];
+      curElement = divs[imgIndex];
+      loadPage(imgs[imgIndex],url);
     }
     else {
       curElement = iframes[iframeIndex];
+      loadPage(curElement,url);
     }
-    loadPage(curElement,url);
     curElement.css('display','block');
   }
   else {
@@ -91,13 +111,14 @@ function displayNext(firsttime){
   url = pages[pageIndex];
   if(url.match(/(png|jpg|gif)$/i)){
     imgIndex = (imgIndex+1) % imgs.length;
-    nextElement = imgs[imgIndex];
+    nextElement = divs[imgIndex];
+    loadPage(imgs[imgIndex],url); // 非同期でロードしておく
   }
   else {
     iframeIndex = (iframeIndex+1) % iframes.length;
     nextElement = iframes[iframeIndex];
+    loadPage(nextElement,url); // 非同期でロードしておく
   }
-  loadPage(nextElement,url); // 非同期でロードしておく
 
   // checkAndRun();
 
@@ -124,8 +145,8 @@ function checkAndRun(){
         if(line.match(/^http:\/\//)){
           a = line.split(/ /);
           pages.push(a[0]);
-          sec = 5;
-          if(a.length > 1) sec = 10;
+          sec = 10;
+          if(a.length > 1) sec = parseInt(a[1]);
           secs.push(sec);
         }
       }
