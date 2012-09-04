@@ -15,9 +15,6 @@ get '/' do
 end
 
 get '/gunosy/:name' do |name|
-  # url = URI.parse('http://gunosy.com/#{name}')
-#  Net::HTTP.version_1_2
-#  USER_AGENT= "
   headers = {
     'Referer' => 'http://pitecan.com',
     'User-Agent' => 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:9.0.1) Gecko/20100101 Firefox/9.0.1'
@@ -25,9 +22,6 @@ get '/gunosy/:name' do |name|
   res = Net::HTTP.start("gunosy.com", 80) { |http|
     http.get("/#{name}",headers)
   }
-#  File.open("/tmp/log","w"){ |f|
-#    f.print res.body
-#  }
   urls = []
   s = res.body
   while s.sub!(/<a href="http:\&\#47;\&\#47;(\S+)" target="_blank"><span class="favicon">/,'') do
@@ -37,17 +31,10 @@ get '/gunosy/:name' do |name|
     url.gsub!(/\&\#47;/,'/')
     urls << url unless urls.member?(url)
   end
-  #res.body
 
   gyazz = Gyazz.new("GyaTV")
   gyazztext = urls.join("\n")
   gyazz.set(name,gyazztext)
-
-#  File.open("/tmp/lll","w"){ |f|
-#    f.print urls
-#  }
-
-  urls.join("<br>")
 
   @name = name
   erb :gyatv
