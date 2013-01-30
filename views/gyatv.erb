@@ -81,9 +81,13 @@ var pageIndex = 0;
 var curElement, nextElement;
 var timeout = null;
 
+function rand(n){
+  return Math.floor(Math.random() * n);
+}
+
 function displayNext(firsttime){
   if(firsttime){
-    pageIndex = 0;
+    pageIndex = rand(pages.length);
     imgIndex = 0;
     iframeIndex = 0;
     url = pages[pageIndex];
@@ -104,7 +108,8 @@ function displayNext(firsttime){
   }
   sec = secs[pageIndex];
   // 次に表示するページをバックグラウンドでロード
-  pageIndex = (pageIndex+1) % pages.length;
+  //pageIndex = (pageIndex+1) % pages.length;
+  pageIndex = rand(pages.length);
   if(pageIndex == 0){
     checkAndRun();
   }
@@ -142,12 +147,14 @@ function checkAndRun(){
       pageIndex = 0;
       for(var i in v){
         line = v[i]
-        if(line.match(/^http:\/\//)){
-          a = line.split(/ /);
-          pages.push(a[0]);
-          sec = 10;
-          if(a.length > 1) sec = parseInt(a[1]);
-          secs.push(sec);
+	if(!line.match(/^#/){
+          if(matched = line.match(/^(\[)*(http:\/\/[^ \]]+).*$/)){
+            a = matched[2].split(/ /);
+            pages.push(a[0]);
+            sec = 10;
+            if(a.length > 1) sec = parseInt(a[1]);
+            secs.push(sec);
+          }
         }
       }
       if(timeout) clearTimeout(timeout);
