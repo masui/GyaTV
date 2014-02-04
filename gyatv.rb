@@ -10,6 +10,10 @@ require 'sinatra'
 require 'net/http'
 require 'gyazz'
 
+configure do
+  set :protection, :except => :frame_options
+end
+
 get '/' do
   redirect "/index.html"
 end

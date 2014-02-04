@@ -147,7 +147,7 @@ function checkAndRun(){
       pageIndex = 0;
       for(var i in v){
         line = v[i]
-	if(!line.match(/^#/){
+	if(!line.match(/^#/)){
           if(matched = line.match(/^(\[)*(http:\/\/[^ \]]+).*$/)){
             a = matched[2].split(/ /);
             pages.push(a[0]);
