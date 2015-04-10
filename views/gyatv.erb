@@ -140,9 +140,10 @@ var curJSON = [];
 
 function checkAndRun(){
   $.getJSON(gyatvURL, function(data){
-    if(data.join() != curJSON.join()){
-      curJSON = data;
-      v = eval(curJSON);
+    if(data['data'].join() != curJSON.join()){
+      curJSON = data['data'];
+      // v = eval(curJSON);
+      v = curJSON;
       pages = [];
       pageIndex = 0;
       for(var i in v){
