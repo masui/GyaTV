@@ -69,3 +69,6 @@ checkAndRun = ->
           window.pages.push a[0]
           window.secs.push if a.length > 1 then parseInt(a[1]) else 5
     displayNext()
+
+$ ->
+  checkAndRun()
