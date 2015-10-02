@@ -15,13 +15,14 @@ imgdivs = [0..2].map ->
 rand = (n) ->
   Math.floor Math.random() * n
 
-displayNext = ->
+displayNext = (pages, secs, seq) ->
   if window.firsttime
-    pageIndex = rand window.pages.length
+    # pageIndex = rand pages.length
+    window.pageIndex = (if seq then 0 else rand pages.length)
     window.imgIndex = 0
     window.iframeIndex = 0
     window.firsttime = false
-    url = window.pages[pageIndex]
+    url = pages[window.pageIndex]
     if url.match /(png|jpg|gif)$/i
       window.curElement = imgdivs[window.imgIndex]
       loadPage window.curElement.children(), url
@@ -33,11 +34,14 @@ displayNext = ->
     window.curElement.css 'display', 'none'
     window.nextElement.css 'display', 'block'
     window.curElement = window.nextElement
-    
-  # pageIndex = (pageIndex+1) % window.pages.length;  # シーケンシャル
-  pageIndex = rand window.pages.length                # ランダム
-  sec = window.secs[pageIndex]
-  url = window.pages[pageIndex]
+
+  window.pageIndex =
+    if seq
+      (window.pageIndex+1) % pages.length;  # シーケンシャル
+    else
+      rand pages.length              # ランダム
+  sec = secs[window.pageIndex]
+  url = pages[window.pageIndex]
   if url.match /(png|jpg|gif)$/i
     window.imgIndex = (window.imgIndex+1) % imgdivs.length
     window.nextElement = imgdivs[window.imgIndex]
@@ -47,7 +51,7 @@ displayNext = ->
     window.nextElement = iframes[window.iframeIndex]
     loadPage window.nextElement, url  # 非同期でロードしておく
   setTimeout ->
-    displayNext()
+    displayNext pages, secs, seq
   , sec * 1000
 
 # バックグラウンドでページ内容をロード
@@ -56,19 +60,23 @@ loadPage = (e,src) ->
     e.attr 'src', src
   ,0
 
-checkAndRun = ->
+checkAndRun = (seq) ->
   $.getJSON gyatvURL, (data) ->
-    window.pages = []
-    window.secs = []
+    pages = []
+    secs = []
     window.firsttime = true
-    pageIndex = 0
+    window.pageIndex = 0
     for line in data['data']
       if !line.match /^#/
         if matched = line.match /^(\[)*(http:\/\/[^ \]]+).*$/
           a = matched[2].split(/ /)
-          window.pages.push a[0]
-          window.secs.push if a.length > 1 then parseInt(a[1]) else 5
-    displayNext()
+          pages.push a[0]
+          secs.push if a.length > 1 then parseInt(a[1]) else 5
+    displayNext pages, secs, seq
 
 $ ->
-  checkAndRun()
+  pairs = location.search.substring(1).split('&')
+  seq = false
+  for pair in pairs
+    seq = true if pair == 'play=seq'
+  checkAndRun seq
