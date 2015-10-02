@@ -15,11 +15,12 @@ imgdivs = [0..2].map ->
 rand = (n) ->
   Math.floor Math.random() * n
 
-displayNext = (firsttime) ->
-  if firsttime
+displayNext = ->
+  if window.firsttime
     pageIndex = rand window.pages.length
     window.imgIndex = 0
     window.iframeIndex = 0
+    window.firsttime = false
     url = window.pages[pageIndex]
     if url.match /(png|jpg|gif)$/i
       window.curElement = imgdivs[window.imgIndex]
@@ -46,7 +47,7 @@ displayNext = (firsttime) ->
     window.nextElement = iframes[window.iframeIndex]
     loadPage window.nextElement, url  # 非同期でロードしておく
   setTimeout ->
-    displayNext false
+    displayNext()
   , sec * 1000
 
 # バックグラウンドでページ内容をロード
@@ -59,6 +60,7 @@ checkAndRun = ->
   $.getJSON gyatvURL, (data) ->
     window.pages = []
     window.secs = []
+    window.firsttime = true
     pageIndex = 0
     for line in data['data']
       if !line.match /^#/
@@ -66,4 +68,4 @@ checkAndRun = ->
           a = matched[2].split(/ /)
           window.pages.push a[0]
           window.secs.push if a.length > 1 then parseInt(a[1]) else 5
-    displayNext true
+    displayNext()
