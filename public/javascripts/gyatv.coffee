@@ -71,7 +71,7 @@ checkAndRun = (seq) ->
         if matched = line.match /^(\[)*(http:\/\/[^ \]]+).*$/
           a = matched[2].split(/ /)
           pages.push a[0]
-          secs.push if a.length > 1 then parseInt(a[1]) else 5
+          secs.push if a.length > 1 then parseInt(a[1]) else 10
     displayNext pages, secs, seq
 
 $ ->
