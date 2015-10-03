@@ -20,7 +20,8 @@ displayNext = (params, seq) ->
     window.pageIndex = (if seq then 0 else rand params.length)
     window.imgIndex = 0
     window.iframeIndex = 0
-    url = params[window.pageIndex].url
+    # url = params[window.pageIndex].url
+    url = params[window.pageIndex][0]
     if url.match /(png|jpg|gif)$/i
       window.curElement = imgdivs[window.imgIndex]
       loadPage window.curElement.children(), url
@@ -36,8 +37,9 @@ displayNext = (params, seq) ->
   window.pageIndex = if seq then window.pageIndex+1 else rand params.length
   window.pageIndex %= params.length
       
-  url = params[window.pageIndex].url
-  sec = params[window.pageIndex].sec
+  url = params[window.pageIndex][0]
+  sec = params[window.pageIndex][1]
+  sec = 10 unless sec?
   if url.match /(png|jpg|gif)$/i
     window.imgIndex = (window.imgIndex+1) % imgdivs.length
     window.nextElement = imgdivs[window.imgIndex]
@@ -62,9 +64,7 @@ checkAndRun = (seq) ->
       ! x.match(/^#/) && x.match(/http/)
     params = lines.map (line) ->
       matched = line.match /^(\[)*(http:\/\/[^ \]]+).*$/
-      a = matched[2].split(/ /)
-      url: a[0]
-      sec: if a.length > 1 then parseInt(a[1]) else 10
+      matched[2].split(/ /)
     displayNext params, seq
 
 $ ->
