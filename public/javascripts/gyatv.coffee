@@ -35,11 +35,9 @@ displayNext = (pages, secs, seq) ->
     window.nextElement.css 'display', 'block'
     window.curElement = window.nextElement
 
-  window.pageIndex =
-    if seq
-      (window.pageIndex+1) % pages.length;  # シーケンシャル
-    else
-      rand pages.length              # ランダム
+  window.pageIndex = if seq then window.pageIndex+1 else rand pages.length
+  window.pageIndex %= pages.length
+      
   sec = secs[window.pageIndex]
   url = pages[window.pageIndex]
   if url.match /(png|jpg|gif)$/i
@@ -76,7 +74,4 @@ checkAndRun = (seq) ->
 
 $ ->
   pairs = location.search.substring(1).split('&')
-  seq = false
-  for pair in pairs
-    seq = true if pair == 'play=seq'
-  checkAndRun seq
+  checkAndRun pairs.indexOf('play=seq') >= 0
