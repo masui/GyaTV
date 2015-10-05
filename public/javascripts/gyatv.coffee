@@ -17,13 +17,13 @@ rand = (n) ->
 
 loadNext = (params, seq) ->
   window.pageIndex =
-    if window.pageIndex?
-      (if seq then window.pageIndex+1 else rand params.length) % params.length
+    if seq
+      if window.pageIndex? then (window.pageIndex+1) % params.length else 0
     else
-      if seq then 0 else rand params.length
+      rand params.length
   url = params[window.pageIndex][0]
-  window.imgIndex = (if window.imgIndex? then window.imgIndex+1 else 0) % imgdivs.length
-  window.iframeIndex = (if window.iframeIndex? then window.iframeIndex+1 else 0) % iframes.length
+  window.imgIndex = if window.imgIndex? then (window.imgIndex+1) % imgdivs.length else 0
+  window.iframeIndex = if window.iframeIndex? then (window.iframeIndex+1) % iframes.length else 0
   if url.match /(png|jpg|gif)$/i
     window.nextElement = imgdivs[window.imgIndex]
     loadPage window.nextElement.children(), url
