@@ -17,7 +17,11 @@ configure do
 end
 
 get '/' do
-  redirect "/index.html"
+  redirect "http://Scrapbox.io/GyaTV/概要"
+end
+
+get '/index.html' do
+  redirect "http://Scrapbox.io/GyaTV/概要"
 end
 
 get '/:name' do |name|
