@@ -21,7 +21,11 @@ get '/' do
 end
 
 get '/:name' do |name|
-  texturl = URI.encode("https://scrapbox.io/api/pages/GyaTV/#{name}/text")
+  redirect "/GyaTV/#{name}"
+end
+
+get '/:project/:name' do |project,name|
+  texturl = URI.encode("https://scrapbox.io/api/pages/#{project}/#{name}/text")
 
   lines = []
   begin
