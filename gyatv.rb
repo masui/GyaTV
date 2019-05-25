@@ -17,7 +17,7 @@ configure do
 end
 
 get '/' do
-  redirect "https://Scrapbox.io/GyaTV/概要"
+  redirect "index.html"
 end
 
 get '/:name' do |name|
@@ -33,7 +33,7 @@ get '/:name' do |name|
   lines.shift
 
   if lines.length == 0
-    redirect "http://Scrapbox.io/GyaTV/概要"
+    redirect "index.html"
   else
     @lines_json = lines.to_json
     erb :gyatv
