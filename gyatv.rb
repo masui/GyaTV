@@ -20,10 +20,6 @@ get '/' do
   redirect "http://Scrapbox.io/GyaTV/概要"
 end
 
-get '/index.html' do
-  redirect "http://Scrapbox.io/GyaTV/概要"
-end
-
 get '/:name' do |name|
   texturl = URI.encode("https://scrapbox.io/api/pages/GyaTV/#{name}/text")
 
@@ -36,7 +32,10 @@ get '/:name' do |name|
   end
   lines.shift
 
-  @lines_json = lines.to_json
-
-  erb :gyatv
+  if lines.length == 0
+    redirect "http://Scrapbox.io/GyaTV/概要"
+  else
+    @lines_json = lines.to_json
+    erb :gyatv
+  end
 end
