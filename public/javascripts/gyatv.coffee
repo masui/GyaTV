@@ -51,13 +51,12 @@ loadPage = (e,src) ->
   ,0
 
 checkAndRun = (seq) ->
-  $.getJSON gyatvURL, (data) ->
-    lines = $.grep data['data'], (x) ->
-      ! x.match(/^#/) && x.match(/http/)
-    params = lines.map (line) ->
-      matched = line.match /^(\[)*(http:\/\/[^ \]]+).*$/
-      matched[2].split(/ /)
-    displayNext params, seq
+  lines = $.grep sblines, (x) ->
+    ! x.match(/^#/) && x.match(/http/)
+  params = lines.map (line) ->
+    matched = line.match /^(\[)*(http:\/\/[^ \]]+).*$/
+    matched[2].split(/ /)
+  displayNext params, seq
 
 $ ->
   pairs = location.search.substring(1).split('&')
