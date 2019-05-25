@@ -17,7 +17,7 @@ configure do
 end
 
 get '/' do
-  redirect "http://Scrapbox.io/GyaTV/概要"
+  redirect "https://Scrapbox.io/GyaTV/概要"
 end
 
 get '/:name' do |name|
