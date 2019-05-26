@@ -54,8 +54,11 @@ checkAndRun = (seq) ->
   lines = $.grep sblines, (x) ->
     ! x.match(/^#/) && x.match(/http/)
   params = lines.map (line) ->
-    matched = line.match /^\s*(\[)*(https?:\/\/[^\s\]]+).*$/
-    matched[2].split(/ /)
+    matched = line.match /^\s*(\[)*((https?:\/\/[^\s\]]+)(\])*(\s+(\d+))?).*$/
+    [matched[3], matched[6]]
+    # matched[2].split(/ /)
+  #console.log params[2][0]
+  #console.log params[2][1]
   displayNext params, seq
 
 $ ->
