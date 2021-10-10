@@ -1,6 +1,6 @@
 require 'rubygems'
 require 'sinatra'
   
-require 'gyatv.rb'
+require './gyatv.rb'
 
 run Sinatra::Application
