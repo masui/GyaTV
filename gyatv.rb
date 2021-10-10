@@ -40,10 +40,10 @@ def display(project,name)
   return if name == 'gyatv.js' # ???
 
   
-  # texturl = URI.encode("https://scrapbox.io/api/pages/#{project}/#{name}/text")
+  texturl = URI.encode("https://scrapbox.io/api/pages/#{project}/#{name}/text")
   # texturl = CGI.escape("https://scrapbox.io/api/pages/#{project}/#{name}/text")
   # texturl = "https://scrapbox.io/api/pages/GyaTV/Wikipedia/text"
-  texturl = "https://scrapbox.io/api/pages/#{project}/#{name}/text"
+  # texturl = "https://scrapbox.io/api/pages/#{project}/#{name}/text"
 
   STDERR.puts "-----------#{texturl}"
 
