@@ -39,6 +39,8 @@ def display(project,name)
   texturl = CGI.escape("https://scrapbox.io/api/pages/#{project}/#{name}/text")
   texturl = "https://scrapbox.io/api/pages/GyaTV/Wikipedia/text"
 
+  STDERR.puts texturl
+
   lines = []
   begin
     open(texturl){ |f|
