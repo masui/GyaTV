@@ -10,6 +10,10 @@
 # 2021/10/1からこういう問題が発生した模様
 # 直し方がわからないのでcurlでしのいでみる
 #
+# 面倒なのでHerokuにしてみた
+# open-uriが何故か動かないのでcurlを使ってる
+# (Herokuでもcurl使えるのね...)
+#
 
 require 'sinatra'
 require 'net/http'
@@ -35,11 +39,6 @@ get '/:project/:name' do |project,name|
 end
 
 def display(project,name)
-  # このあたり必要なのか?
-  #return if project =~ /\//
-  #return if name == 'favicon.ico'
-  #return if name == 'gyatv.js' # ???
-
   texturl = URI.encode("https://scrapbox.io/api/pages/#{project}/#{name}/text")
 
   lines = []
