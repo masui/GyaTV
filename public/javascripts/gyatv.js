@@ -57,7 +57,6 @@ loadPage = function(e, src) {
 
 checkAndRun = function(seq) {
   var lines, params;
-  alert(sblines);
   lines = $.grep(sblines, function(x) {
     return !x.match(/^#/) && x.match(/http/);
   });

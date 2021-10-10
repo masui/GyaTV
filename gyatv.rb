@@ -45,17 +45,15 @@ def display(project,name)
   # texturl = "https://scrapbox.io/api/pages/GyaTV/Wikipedia/text"
   texturl = "https://scrapbox.io/api/pages/#{project}/#{name}/text"
 
-  STDERR.puts "-------------#{texturl}"
-
   lines = []
   begin
     #open(texturl){ |f|
     #  lines = f.read.split(/\n/)
     #}
     lines = `curl #{texturl}`.split(/\n/)
-    STDERR.puts "======#{lines}"
+    # STDERR.puts "======#{lines}"
   rescue
-    STDERR.puts "------------RESCUE"
+    # STDERR.puts "------------RESCUE"
   end
   lines.shift
 
@@ -63,7 +61,7 @@ def display(project,name)
     redirect "index.html"
   else
     @lines_json = lines.to_json
-    STDERR.puts "======#{@lines_json}"
+    # STDERR.puts "======#{@lines_json}"
     erb :gyatv
   end
 end
