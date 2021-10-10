@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/stylesheets/gyatv.css" type="text/css">
     <title>GyaTV: <%= @name %></title>
     <script src="/javascripts/jquery.js"></script>
+    <script src="/javascripts/gyatv.js"></script>
   </head>
   <body>
     <script type="text/javascript">
@@ -13,6 +14,5 @@
       var sblines = JSON.parse('<%= @lines_json %>');
       alert(sblines)
     </script>
-    <script src="javascripts/gyatv.js"></script>
   </body>
 </html>
