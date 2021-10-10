@@ -35,6 +35,11 @@ get '/:project/:name' do |project,name|
 end
 
 def display(project,name)
+  return if project =~ /\//
+  return if name == 'favicon.ico'
+  return if name == 'gyatv.js' # ???
+
+  
   # texturl = URI.encode("https://scrapbox.io/api/pages/#{project}/#{name}/text")
   #texturl = CGI.escape("https://scrapbox.io/api/pages/#{project}/#{name}/text")
   # texturl = "https://scrapbox.io/api/pages/GyaTV/Wikipedia/text"
