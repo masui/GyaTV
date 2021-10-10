@@ -39,10 +39,10 @@ def display(project,name)
 
   lines = []
   begin
-    #open(texturl){ |f|
-    #  lines = f.read.split(/\n/)
-    #}
-    lines = `curl #{texturl}`.split(/\n/)
+    open(texturl){ |f|
+      lines = f.read.split(/\n/)
+    }
+    # lines = `curl #{texturl}`.split(/\n/)
   rescue
   end
   lines.shift
