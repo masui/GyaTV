@@ -35,27 +35,20 @@ get '/:project/:name' do |project,name|
 end
 
 def display(project,name)
-  return if project =~ /\//
-  return if name == 'favicon.ico'
-  return if name == 'gyatv.js' # ???
+  # このあたり必要なのか?
+  #return if project =~ /\//
+  #return if name == 'favicon.ico'
+  #return if name == 'gyatv.js' # ???
 
-  
   texturl = URI.encode("https://scrapbox.io/api/pages/#{project}/#{name}/text")
-  # texturl = CGI.escape("https://scrapbox.io/api/pages/#{project}/#{name}/text")
-  # texturl = "https://scrapbox.io/api/pages/GyaTV/Wikipedia/text"
-  # texturl = "https://scrapbox.io/api/pages/#{project}/#{name}/text"
-
-  STDERR.puts "-----------#{texturl}"
 
   lines = []
   begin
     #open(texturl){ |f|
     #  lines = f.read.split(/\n/)
     #}
-    lines = `curl #{texturl}`.split(/\n/)
-    # STDERR.puts "======#{lines}"
+    lines = `curl #{texturl}`.split(/\n/) # Herokuでもこれを使ってみる
   rescue
-    # STDERR.puts "------------RESCUE"
   end
   lines.shift
 
@@ -63,7 +56,6 @@ def display(project,name)
     redirect "index.html"
   else
     @lines_json = lines.to_json
-    # STDERR.puts "======#{@lines_json}"
     erb :gyatv
   end
 end
