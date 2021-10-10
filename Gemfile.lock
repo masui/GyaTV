@@ -2,6 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     json (2.5.1)
+    open-uri (0.1.0)
     rack (1.6.5)
     rack-protection (1.5.3)
       rack
@@ -17,8 +18,12 @@ PLATFORMS
 
 DEPENDENCIES
   json
+  open-uri
   sinatra
   uri
 
+RUBY VERSION
+   ruby 2.6.3p62
+
 BUNDLED WITH
-   1.13.7
+   1.17.2
