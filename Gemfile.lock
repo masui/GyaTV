@@ -3,9 +3,9 @@ GEM
   specs:
 
 PLATFORMS
-  universal-darwin-20
+  ruby
 
 DEPENDENCIES
 
 BUNDLED WITH
-   2.2.6
+   1.13.7
