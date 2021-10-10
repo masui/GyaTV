@@ -6,3 +6,15 @@ push:
 
 local:
 	ruby gyatv.rb -p 3000
+
+#
+# Herokuコマンド
+#
+logs:
+        heroku logs -t -a gyatv
+restart:
+        heroku restart -a gyatv
+stop:
+        heroku ps:scale web=0 -a gyatv
+start:
+        heroku ps:scale web=1 -a gyatv
