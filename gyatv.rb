@@ -45,6 +45,8 @@ def display(project,name)
   # texturl = "https://scrapbox.io/api/pages/GyaTV/Wikipedia/text"
   # texturl = "https://scrapbox.io/api/pages/#{project}/#{name}/text"
 
+  STDERR.puts "-----------#{texturl}"
+
   lines = []
   begin
     #open(texturl){ |f|
