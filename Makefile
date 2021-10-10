@@ -11,10 +11,10 @@ local:
 # Herokuコマンド
 #
 logs:
-        heroku logs -t -a gyatv
+	heroku logs -t -a gyatv
 restart:
-        heroku restart -a gyatv
+	heroku restart -a gyatv
 stop:
-        heroku ps:scale web=0 -a gyatv
+	heroku ps:scale web=0 -a gyatv
 start:
-        heroku ps:scale web=1 -a gyatv
+	heroku ps:scale web=1 -a gyatv

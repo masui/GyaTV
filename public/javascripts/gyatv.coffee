@@ -51,6 +51,7 @@ loadPage = (e,src) ->
   ,0
 
 checkAndRun = (seq) ->
+  alert sblines
   lines = $.grep sblines, (x) ->
     ! x.match(/^#/) && x.match(/http/)
   params = lines.map (line) ->
