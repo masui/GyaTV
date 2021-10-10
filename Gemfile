@@ -8,5 +8,3 @@ gem "sinatra"
 gem 'json'
 gem 'uri'
 gem 'open-uri'
-
-# gem "rails"
