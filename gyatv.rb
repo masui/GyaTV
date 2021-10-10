@@ -35,7 +35,8 @@ get '/:project/:name' do |project,name|
 end
 
 def display(project,name)
-  texturl = URI.encode("https://scrapbox.io/api/pages/#{project}/#{name}/text")
+  # texturl = URI.encode("https://scrapbox.io/api/pages/#{project}/#{name}/text")
+  texturl = CGI.escape("https://scrapbox.io/api/pages/#{project}/#{name}/text")
 
   lines = []
   begin
