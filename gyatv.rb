@@ -63,6 +63,7 @@ def display(project,name)
     redirect "index.html"
   else
     @lines_json = lines.to_json
+    STDERR.puts "======#{@lines_json}"
     erb :gyatv
   end
 end
