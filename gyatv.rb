@@ -39,7 +39,7 @@ def display(project,name)
   texturl = CGI.escape("https://scrapbox.io/api/pages/#{project}/#{name}/text")
   texturl = "https://scrapbox.io/api/pages/GyaTV/Wikipedia/text"
 
-  STDERR.puts texturl
+  STDERR.puts "-------------#{texturl}"
 
   lines = []
   begin
@@ -48,6 +48,7 @@ def display(project,name)
     }
     # lines = `curl #{texturl}`.split(/\n/)
   rescue
+    STDERR.puts "------------RESCUE"
   end
   lines.shift
 
